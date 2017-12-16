@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+meta charset="UTF-8">
+    <title>Album</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+<!-- upload albums-->
+ <div class="title">
+            <h1>Upload an album {{album}}</h1>
+        </div>
+
+            <form method="POST"  action="create_album">
+                <label for="album_name"> name:</label>
+                <input type="text" name="album_name" required='true' /><br />
+                <input type="submit" value="Upload" />
+            </form>
+<!-- delete existing albums-->
+	<div class="title">
+        <h1>Remove Album {{album}}</h1>
+    </div>
+
+	<form enctype="multipart/form-data" action="delete_album/{{album}}" method = "POST">
+  	   	<input type="submit" name="delete_album" placeholder="Delete album"/>
+	</form>
+
+
+<!-- display existing albums-->
+  <h1>Search Photos by Tags</h1>
+  <form action="search_by_tag" method = "POST">
+    <input type="text" placeholder="tag" name="tag_name" required='true' />
+    <input type="submit" name="searchByTag" value="search"/>
+  </form>
+{% if search_tags %}
+    {% for tag in search_tags %}
+      <ul>
+            <li>
+              <img width="450px" height="300px" src='data:image/png;base64, {{tag[0]}}'/>
+            </li>
+          </ul>
+      {% endfor %}
+  {% endif %}
+<!-- search tag within my albums-->
+<h1>Results for {{word}} among user's photos</h1>
+	{% if usersPhotos %}
+		{% for userPhoto in usersPhotos %}
+			<ul>
+		        <li>
+		        	<img width="450px" height="300px" src='data:image/png;base64, {{userPhoto[0]}}'/>
+		        </li>
+	        </ul>
+	    {% endfor %}
+	{% endif %}
+</body>
+
+</html>
