@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Photos</title>
+     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
@@ -20,20 +21,15 @@
 		<h2>Here's your photos</h2>
 	    <ul>
 		    {% for i in range(photos|length) %}
-		        <li><img width="450px" height="300px" src='data:image/png;base64, {{photos[i]}}'/></li>
-		        <form method="post" enctype="multipart/form-data" action="{{ url_for('add_tag_to_photo') }}">
+		        <li><img width="450px" height="300px" src='data:image/png;base64, {{photos[i][0]}}'/></li>
+		        <form method="post" enctype="multipart/form-data" action="{{ url_for('add_tag') }}">
 		        	<input type="hidden" name="album_name" required='true' value={{album_name}} required='true' />
 		        	<input type="hidden" name="pid" required='true' value={{pids[i]}} required='true'/>
+
 				    <label for="tag">Add a tag</label>
 				    <input type="text" name="word" required='true' /><br />
 				    <input type="submit" value="add a tag"/>
 				</form>
-		        <form method="post" enctype="multipart/form-data" action="{{ url_for('delete_photo') }}">
-		        	<input type="hidden" name="album_name" required='true' value={{album_name}} required='true' />
-		        	<input type="hidden" name="pid" required='true' value={{pids[i]}} required='true'/>
-				    <input type="submit" value="delete photo"/>
-				</form>
-
 		        {% if tags %}
 			        <h2>Here's your tags</h2>
 				    <ul>
